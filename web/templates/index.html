@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Grid</title>
+    <link rel="icon" href="../static/robot.svg" type="image/svg+xml">
+    <link href="../static/bootstrap-4.5.3.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles.css">
+
+    <script src="../static/socket-4.0.0.io.min.js"></script>
+    <script src="../static/jquery-3.5.1.slim.min.js"></script>
+    <script src="../static/popper.min.js"></script>
+    <script src="../static/bootstrap-4.5.3.min.js"></script>
+
+    <script src="../static/grid.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row h-100">
+            <div class="col-md-4 d-flex flex-column vh-100 left-panel">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="heading" >*MARG</h1>
+                        <h4 class="sub-heading" style="align-content: end;"> Monitoring and Adaptive Runtime Guide</h4>
+                        <hr>
+                        <h2 class="mt-5 w-100">Grid Generator</h2>
+                        <div class="mt-3 w-100">
+                            <form id="grid-form">
+                                <div class="form-group">
+                                    <label for="grid-size">Enter Grid Size:</label>
+                                    <input type="number" class="form-control" id="grid-size" name="grid_size" min="1" max="10" required>
+
+                                    <label for="wall-density" class="mt-3">Wall density:</label>
+                                    <span id="wall-density-value" class="slider-value mt-3"></span>
+                                    <input type="range" class="form-control-range" id="wall-density" min="0" max="1" step="0.01">
+                                </div>
+                                <div class="d-grid gap-0 d-md-block">
+                                    <div class="row no-gutters">
+                                        <div class="col-6 pr-1">
+                                            <button type="submit" class="btn btn-primary w-100">Generate Grid</button>
+                                        </div>
+                                        <!-- <div class="col-6 pl-1">
+                                            <button type="button" id="load-grid" class="btn btn-secondary w-100">Load Grid</button>
+                                        </div> -->
+                                        <div class="col-6 pl-1">
+                                            <button type="button" id="reset-session" class="btn btn-outline-danger w-100">Reset Session</button>
+                                        </div>
+                                                                
+                                    </div>
+                                </div>
+                            </form>         
+                        </div>
+
+
+                        <hr>
+                        
+                        <div id="grid-solver-section" class="mt-3">
+
+                            <h2 class="mt-5">Grid Solver</h2>
+
+                            <fieldset class="mt-3">
+                                <div class="btn-group btn-group-toggle w-100" data-toggle="buttons" id="grid-modification-options">
+                                    <label class="btn btn-outline-secondary w-33 active">
+                                        <input type="radio" name="options" id="modify-ownership" value="modify_ownership" checked> Modify ownership
+                                    </label>
+                                    <label class="btn btn-outline-secondary w-33">
+                                        <input type="radio" name="options" id="modify-reward" value="modify_reward"> Modify rewards
+                                    </label>
+                                    <label class="btn btn-outline-secondary w-33">
+                                        <input type="radio" name="options" id="modify-initial-state" value="modify_initial_state"> Modify initial state
+                                    </label>
+                                </div>
+                            </fieldset>
+            
+                            <div class="d-grid gap-0 d-md-block mt-3">
+                                <div class="row no-gutters">
+                                    <div class="col-6 pr-1">
+                                        <button id="solve-game" class="btn btn-primary w-100">Solve Game</button>
+                                    </div>       
+                                    <div class="col-6 pl-1">
+                                        <button type="button" id="save-grid" class="btn btn-secondary w-100">Save Grid</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div id="enforcing-parameter-group" class="mt-3">
+                                <label for="enforcing-parameter">Enforcing Parameter:</label>
+                                <span id="enforcing-parameter-value" class="slider-value"></span>
+                                <input type="range" class="form-control-range" id="enforcing-parameter" min="0" max="1" step="0.001">
+                            </div>
+
+
+                            <fieldset class="mt-3">
+                                <div class="btn-group btn-group-toggle w-100" data-toggle="buttons" id="movement-options">
+                                    <label class="btn btn-secondary w-50 active">
+                                        <input type="radio" name="options" id="no-shield" value="no_shield" checked> Move robot without Shield
+                                    </label>
+                                    <label class="btn btn-secondary w-50">
+                                        <input type="radio" name="options" id="use-shield" value="use_shield"> Move robot with Shield
+                                    </label>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </div>
+            
+                </div>
+
+                <div class="row mt-5">
+                    <p class="text-center mb-0">* Powered by STARS (Strategy Templates-based Adaptive Runtime Shield)</p>
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-8 right-panel">
+                <div class="toolbar" id="toolbar">
+                    <div class="form-check form-check-inline mr-0">
+                        <input class="form-check-input" type="checkbox" id="toolbar-random-checkbox" value="option1">
+                        <label class="form-check-label" for="toolbar-random-checkbox">Random</label>
+                    </div>
+                    <button id="toolbar-add-parity" class="btn btn-outline-success">Add parity</button>
+
+                    <span class="separator"></span>
+
+                    <div id="toolbar-objectives">
+
+                    </div>
+
+                    <fieldset>
+                        <div class="btn-group btn-group-toggle w-20" data-toggle="buttons" id="toolbar-modification-options">
+                            <label class="btn btn-outline-secondary w-50 active">
+                                <input type="radio" name="options" id="toolbar-modify-parity" value="modify_parity"> Modify
+                            </label>
+                            <label class="btn btn-outline-secondary w-50">
+                                <input type="radio" name="options" id="toolbar-save-parity" value="save_parity" checked> Save
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <button id="toolbar-delete-parity" class="btn btn-outline-danger">Delete parity</button>
+                </div>
+                <div id="grid"></div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

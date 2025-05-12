@@ -1,0 +1,353 @@
+/* styles.css */
+
+@font-face {
+    font-family: 'bootstrap-icons';
+    src: url('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/fonts/bootstrap-icons.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/npm/bootstrap-icons/font/fonts/bootstrap-icons.woff') format('woff');
+}
+
+.heading {
+    font-size: 6rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sub-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.parent-div {
+    position: relative;
+}
+
+.fixed-bottom-custom {
+    position: absolute;
+    bottom: 0;
+}
+
+#grid {
+    display: grid;
+}
+
+.cell {
+    border: 1px solid #cccccc42;
+    height: 80px;
+    width: 80px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.cell.robot {
+
+    background-image: url("./robot.svg");
+    background-size: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.cell > div#cell-info {
+    position: relative;
+    display: flex; 
+    height: 20%;
+    width: 100%;
+    margin-top: 1px;
+    margin-left: 1px;
+    align-items: center;
+    align-content: center;
+}
+
+.cell > div#cell-info > #owner {
+    width: 20%;
+    aspect-ratio: 1;
+}
+
+.cell > div#cell-info > #owner.playerOne {
+    height: 100%;
+    background-color: #ff000046;
+}
+
+.cell > div#cell-info > #owner.playerZero {
+    height: 100%;
+    border-radius: 50%;
+    background-color: #00ccff46;
+}
+
+.cell > div#cell-info > #objectives {
+    margin-left: 0.2rem;
+    height: 100%;
+    width: 70%;
+    display: flex; 
+    align-items: right; 
+}
+
+.cell > div#cell-info > #objectives > div {
+    height: 90%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid #000;
+}
+
+.cell > div#cell-info > #objectives > div.unsafe {
+    background-color: #ff000040;
+}
+
+.cell > div#cell-info > #objectives > div.buechi {
+    background-color: #00ff553a;
+}
+
+.cell > div#cell-info > #objectives > div.cobuechi {
+    background-color: #ff660040;
+}
+
+
+
+.cell > input.weight-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 100%;
+    height: 90%;
+    color: #333;
+    border: none;
+}
+
+.cell > input.weight-display:disabled {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 50%;
+    height: fit-content;
+    background-color: transparent;
+    border: none;
+    color: #333;
+}
+
+.wall {
+    background-color: #333!important;
+    border: 1px solid #333!important;
+}
+
+.vertical {
+    width: 10px!important;
+}
+
+.horizontal {
+    height: 10px!important;
+}
+
+
+.cell.unsafe {
+    background-color: #ff000040;
+}
+
+.cell.buechi {
+    background-color: #00ff553a;
+}
+
+.cell.cobuechi {
+    background-color: #ff660040;
+}
+
+
+.left-panel {
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.right-panel {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.slider-value {
+    float: right;
+}
+
+#save-grid {
+    display: inline;
+}
+
+#grid-solver-section {
+    display: none;
+}
+
+#solve-game {
+    display: inline;
+}
+
+
+#enforcing-parameter-group {
+    display: none;
+}
+
+#movement-options {
+    display: none;
+    justify-content: space-between;
+}
+
+#display-templates {
+    display: none;
+}
+
+
+.toolbar {
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #f4f4f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    cursor: move;
+    gap: 10px;  
+    align-items: center;
+    z-index: 1000;
+}
+
+#toolbar-objectives {
+    display: flex;
+    gap: 10px;
+    height: 100%;
+}
+
+.toolbar-parity {
+    height: 2em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid #000;
+    text-align: center;
+    align-content: center;
+}
+
+.selected {
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.modifiable {
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
+
+.separator {
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    width: 2px;
+    height: 1.5em;
+    background-color: #f4f4f9;
+}
+
+
+
+input[type="checkbox"] {
+    accent-color: #00ccff;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #00ccff;
+    border-color: #00ccff;
+}
+
+input[type="checkbox"]:focus {
+    outline: 2px solid #00ccff;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    hr {
+        border-color: #555;
+    }
+
+    .cell {
+        border: 1px solid #bebebe40;
+    }
+
+    .wall {
+        background-color: #8f8e8e!important;
+        border: 1px solid #8f8e8e!important;
+    }
+
+    .cell.red {
+        background-color: darkred;
+    }
+
+    .toolbar {
+        border: 1px solid #555;
+        background-color: #333;
+        color: #f4f4f9;
+    }
+
+    .left-panel{
+        border-right: 1px solid #555;
+        background-color: #333;
+        color: #f4f4f9;
+    }
+
+    .right-panel {
+        background-color: #444;
+        color: #f4f4f9;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    }
+
+    .cell.robot {
+        background-image: url("./robot-dark.svg");
+    }
+
+
+    .cell > input.weight-display {
+        color: #8f8e8e;
+        background-color: transparent;
+        outline: none;
+    }
+
+
+
+    .cell > input.weight-display:disabled {
+        color: #333;
+}
+
+    #toolbar {
+        color: #8f8e8e;
+    }
+
+    .cell > div#cell-info > #objectives > div, .toolbar-parity {
+        border: 1px solid #8f8e8e;
+        color: #8f8e8e;
+    }
+
+    input[type="checkbox"] {
+        accent-color: #8f8e8e;
+    }
+
+    input[type="checkbox"]:checked {
+        background-color: #8f8e8e;
+        border-color: #8f8e8e;
+    }
+
+    input[type="checkbox"]:focus {
+        outline: 2px solid #8f8e8e;
+    }
+
+    .separator {
+        border: 1px solid #555;
+        background-color: #333;
+    }
+
+    .modal-content {
+        border: 1px solid #555;
+        background-color: #333;
+        color: #f4f4f9;
+    }
+}

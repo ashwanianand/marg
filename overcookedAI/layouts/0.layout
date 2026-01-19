@@ -1,0 +1,12 @@
+{
+    "grid":  """XOPX
+                O1 O
+                O 2O
+                XDSX""",
+    "start_bonus_orders": [],
+    "start_all_orders" : [],
+    "rew_shaping_params": None,
+    "onion_value"  : 10,
+    "tomato_value" : 5,
+    "cook_time": 1
+}

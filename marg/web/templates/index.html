@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Grid</title>
+    <link rel="icon" href="../static/robot.svg" type="image/svg+xml">
+    <link href="../static/bootstrap-4.5.3.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles.css">
+
+    <script src="../static/socket-4.0.0.io.min.js"></script>
+    <script src="../static/jquery-3.5.1.slim.min.js"></script>
+    <script src="../static/bootstrap-4.5.3.min.js"></script>
+
+    <script src="../static/grid.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 left-panel">
+                <h1 class="mt-5">Liveness Shield</h1>
+                <hr>
+                <h2 class="mt-5">Grid Generator</h2>
+                <form id="grid-form" class="mt-3">
+                    <div class="form-group">
+                        <label for="grid-size">Enter Grid Size:</label>
+                        <input type="number" class="form-control" id="grid-size" name="grid_size" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="wall-density">Wall density:</label>
+                        <span id="wall-density-value" class="slider-value">0.3</span>
+                        <input type="range" class="form-control-range" id="wall-density" min="0" max="1" step="0.01" value="0.3">
+                    </div>
+                    <div class="d-grid gap-0 d-md-block">
+                        <div class="row no-gutters">
+                            <div class="col-6 pr-1">
+                                <button type="submit" class="btn btn-primary w-100">Generate Grid</button>
+                            </div>
+                            <div class="col-6 pl-1">
+                                <button type="button" id="load-grid" class="btn btn-secondary w-100">Load Grid</button>
+                            </div>
+                                                       
+                        </div>
+                    </div>
+
+                </form>
+
+
+                <hr>
+                
+                <div id="grid-solver-section" class="mt-3">
+
+                    <h2 class="mt-5">Grid Solver</h2>
+
+                    <fieldset class="mt-3">
+                        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons" id="grid-modification-options">
+                            <label class="btn btn-outline-secondary w-33 active">
+                                <input type="radio" name="options" id="modify-objective" value="modify_objective" checked> Modify objective
+                            </label>
+                            <label class="btn btn-outline-secondary w-33">
+                                <input type="radio" name="options" id="modify-reward" value="modify_reward"> Modify rewards
+                            </label>
+                            <label class="btn btn-outline-secondary w-33">
+                                <input type="radio" name="options" id="modify-initial-state" value="modify_initial_state"> Modify initial state
+                            </label>
+                        </div>
+                    </fieldset>
+    
+                    <div class="d-grid gap-0 d-md-block mt-3">
+                        <div class="row no-gutters">
+                            <div class="col-6 pr-1">
+                                <button id="solve-game" class="btn btn-primary w-100">Solve Game</button>
+                            </div>       
+                            <div class="col-6 pl-1">
+                                <button type="button" id="save-grid" class="btn btn-secondary w-100">Save Grid</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div id="enforcing-parameter-group" class="mt-3">
+                        <label for="enforcing-parameter">Enforcing Parameter:</label>
+                        <span id="enforcing-parameter-value" class="slider-value">0.3</span>
+                        <input type="range" class="form-control-range" id="enforcing-parameter" min="0" max="1" step="0.01" value="0.3">
+                    </div>
+
+
+                    <fieldset class="mt-3">
+                        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons" id="movement-options">
+                            <label class="btn btn-secondary w-50 active">
+                                <input type="radio" name="options" id="no-shield" value="no_shield" checked> Move robot without Shield
+                            </label>
+                            <label class="btn btn-secondary w-50">
+                                <input type="radio" name="options" id="use-shield" value="use_shield"> Move robot with Shield
+                            </label>
+                        </div>
+                    </fieldset>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-8 right-panel">
+                <div id="grid"></div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
